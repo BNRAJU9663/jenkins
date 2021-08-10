@@ -2,11 +2,16 @@
 # vars file for jenkins
 java: "java-1.8.0"
 javaU: "openjdk-8-jre-headless"
+jenkins_url: "https://pkg.jenkins.io/debian-stable/"
 reposU:
  jenkins:
     name: "Jenkins"
-    url: "https://pkg.jenkins.io/debian-stable/"
+    url: "https://pkg.jenkins.io/debian-stable"
     description: "Jenkins from Yum repo"
+    #epel: 
+ # name: "Jenkins"
+    # url: "https://pkg.jenkins.io/debian-stable"
+    #    description: "Jenkins from Yum repo"
 repos:
  epel:
     name: "EPEL"

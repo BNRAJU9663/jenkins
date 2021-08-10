@@ -6,11 +6,10 @@
     url: "{{ jenkins_key_rpmU }}"
 - name: "Set EPEL yum repository"
   apt_repository:
-      filename: "{{ item.value.name }}"
-      repo: "{{ item.value.url }}"
-      description: "{{ item.value.description }}"
-  loop:
-      "{{ lookup('dict',reposU) }}"
+      repo: deb "{{ jenkins_url }}" binary/
+      state: present
+  #loop:
+  #    "{{ lookup('dict',reposU) }}"
 - name: "Install Java and Jenkins"
   apt:
       name: "{{ item.value.name }}"
