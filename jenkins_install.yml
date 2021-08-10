@@ -70,5 +70,5 @@
         name: jenkins
         state: started
   vars_files: 
-    - vars.yml
+    - variables.yml
 
