@@ -10,8 +10,10 @@ reposU:
 repos:
  epel:
     name: "EPEL"
-    url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+    url: "https://download.fedoraproject.org/pub/epel/7/$basearch/"
     description: "EPEL release Yum repo"
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"
+    gpgcheck: yes
  jenkins:
     name: "Jenkins"
     url: "https://pkg.jenkins.io/redhat-stable/"
