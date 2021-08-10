@@ -12,3 +12,6 @@
 - name: using FEDORA file
   include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
+- name: using Amazon file
+  include_tasks: amazon.yml
+  when: ansible_distribution == "Amazon"
