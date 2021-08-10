@@ -1,0 +1,74 @@
+--- 
+- 
+  become: true
+  hosts: localhost
+  tasks: 
+    - 
+      apt_key: 
+        state: present
+        url: "{{ jenkins_key_rpmU }}"
+      when: "(ansible_facts['distribution'] == \"Ubuntu\")"
+      name: "add jenkins key"
+    - 
+      apt_repository: 
+        repo: "deb \"{{ jenkins_url }}\" binary/"
+        state: present
+      when: "(ansible_facts['distribution'] == \"Ubuntu\")"
+      name: "Set EPEL yum repository"
+    - 
+      apt: 
+        name: "{{ item.value.name }}"
+        state: present
+      loop: "{{ lookup('dict',softwaresU) }}"
+      name: "Install Java and Jenkins"
+      when: "(ansible_facts['distribution'] == \"Ubuntu\")"
+    - 
+      name: "add jenkins key"
+      rpm_key: 
+        key: "{{ jenkins_key_rpm }}"
+        state: present
+      when: "(ansible_facts['distribution'] == \"Amazon\") or (ansible_facts['distribution'] == \"Fedora\") or (ansible_facts['distribution'] == \"RedHat\")"
+    - 
+      debug: 
+        msg: "{{ item.value.description }} {{ item.value.name }}, {{ item.value.url }}"
+      loop: "{{ lookup('dict',reposAmazon) }}"
+      name: ReposAmazon
+      when: "(ansible_facts['distribution'] == \"Amazon\")"
+    - 
+      loop: "{{ lookup('dict',reposAmazon) }}"
+      name: "Set EPEL yum repository Amazon"
+      when: "(ansible_facts['distribution'] == \"Amazon\")"
+      yum_repository: 
+        baseurl: "{{ item.value.url }}"
+        description: "{{ item.value.description }}"
+        name: "{{ item.value.name }}"
+    - 
+      debug: 
+        loop: "{{ lookup('dict',repos) }}"
+        msg: "{{ item.value.description }} {{ item.value.name }}, {{ item.value.url }}"
+      when: "(ansible_facts['distribution'] == \"CentOS\") or (ansible_facts['distribution'] == \"Fedora\") or (ansible_facts['distribution'] == \"RedHat\")"
+      name: Repos
+    - 
+      name: "Set EPEL yum repository"
+      yum_repository: 
+        baseurl: "{{ item.value.url }}"
+        description: "{{ item.value.description }}"
+        loop: "{{ lookup('dict',repos) }}"
+        name: "{{ item.value.name }}"
+      when: "(ansible_facts['distribution'] == \"CentOS\") or (ansible_facts['distribution'] == \"Fedora\") or (ansible_facts['distribution'] == \"RedHat\")"
+    - 
+      name: "Install Java and Jenkins"
+      yum: 
+        loop: "{{ lookup('dict',softwares) }}"
+        name: "{{ item.value.name }}"
+        state: present
+      when: "(ansible_facts['distribution'] == \"Amazon\") or (ansible_facts['distribution'] == \"CentOS\") or (ansible_facts['distribution'] == \"Fedora\") or (ansible_facts['distribution'] == \"RedHat\")"
+    - 
+      name: "Starting jenkins"
+      service: 
+        enabled: true
+        name: jenkins
+        state: started
+  vars_files: 
+    - vars.yml
+
