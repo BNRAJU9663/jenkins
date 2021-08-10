@@ -15,7 +15,7 @@
       baseurl: "{{ item.value.url }}"
       description: "{{ item.value.description }}"
   loop:
-      "{{ lookup('dict',repos) }}"
+      "{{ lookup('dict',reposAmazon) }}"
 - name: "Install Java and Jenkins"
   yum:
       name: "{{ item.value.name }}"

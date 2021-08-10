@@ -3,19 +3,21 @@
 java: "java-1.8.0"
 javaU: "openjdk-8-jre-headless"
 jenkins_url: "https://pkg.jenkins.io/debian-stable/"
-reposU:
- jenkins:
-    name: "Jenkins"
-    url: "https://pkg.jenkins.io/debian-stable"
-    description: "Jenkins from Yum repo"
-    #epel: 
- # name: "Jenkins"
-    # url: "https://pkg.jenkins.io/debian-stable"
-    #    description: "Jenkins from Yum repo"
-repos:
+reposAmazon:
  epel:
     name: "EPEL"
     url: "https://download.fedoraproject.org/pub/epel/7/$basearch/"
+    description: "EPEL release Yum repo"
+    gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"
+    gpgcheck: yes
+ jenkins:
+    name: "Jenkins"
+    url: "https://pkg.jenkins.io/redhat-stable/"
+    description: "Jenkins from Yum repo"
+repos:
+ epel:
+    name: "EPEL"
+    url: "https://download.fedoraproject.org/pub/epel/$releasever/$basearch/"
     description: "EPEL release Yum repo"
     gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"
     gpgcheck: yes
